@@ -42,19 +42,17 @@ class _BallState extends State<Ball> {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        child: AnimatedCrossFade(
-          duration: const Duration(milliseconds: 1000),
-          firstCurve: Curves.easeInCubic,
-          secondCurve: Curves.easeInCubic,
-          crossFadeState:
-              showFirst ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-          firstChild: TextButton(
-            onPressed: () => changeBallAnswer(),
-            child: Image.asset('images/ball$ballAnswerNumber1.png'),
-          ),
-          secondChild: TextButton(
-            onPressed: () => changeBallAnswer(),
-            child: Image.asset('images/ball$ballAnswerNumber2.png'),
+        child: TextButton(
+          onPressed: () => changeBallAnswer(),
+          child: AnimatedCrossFade(
+            duration: const Duration(milliseconds: 1000),
+            firstCurve: Curves.easeInCubic,
+            secondCurve: Curves.easeInCubic,
+            crossFadeState: showFirst
+                ? CrossFadeState.showFirst
+                : CrossFadeState.showSecond,
+            firstChild: Image.asset('images/ball$ballAnswerNumber1.png'),
+            secondChild: Image.asset('images/ball$ballAnswerNumber2.png'),
           ),
         ),
       ),

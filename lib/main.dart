@@ -34,20 +34,38 @@ class Ball extends StatefulWidget {
 }
 
 class _BallState extends State<Ball> {
-  int ballAnswerNumber = 1;
+  bool showFirst = true;
+  int ballAnswerNumber1 = 1;
+  int ballAnswerNumber2 = 2;
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        child: TextButton(
-          onPressed: () => getAnswerFromTheBall(),
-          child: Image.asset('images/ball$ballAnswerNumber.png'),
+        child: AnimatedCrossFade(
+          duration: const Duration(milliseconds: 1000),
+          firstCurve: Curves.easeInCubic,
+          secondCurve: Curves.easeInCubic,
+          crossFadeState:
+              showFirst ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+          firstChild: TextButton(
+            onPressed: () => changeBallAnswer(),
+            child: Image.asset('images/ball$ballAnswerNumber1.png'),
+          ),
+          secondChild: TextButton(
+            onPressed: () => changeBallAnswer(),
+            child: Image.asset('images/ball$ballAnswerNumber2.png'),
+          ),
         ),
       ),
     );
   }
 
-  void getAnswerFromTheBall() =>
-      setState(() => ballAnswerNumber = Random().nextInt(5) + 1);
+  void changeBallAnswer() => setState(() {
+        int nextBallAnswerNumber = Random().nextInt(5) + 1;
+        showFirst
+            ? ballAnswerNumber2 = nextBallAnswerNumber
+            : ballAnswerNumber1 = nextBallAnswerNumber;
+        showFirst = !showFirst;
+      });
 }
